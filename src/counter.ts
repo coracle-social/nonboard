@@ -1,9 +1,25 @@
-export function setupCounter(element: HTMLButtonElement) {
-  let counter = 0
-  const setCounter = (count: number) => {
-    counter = count
-    element.innerHTML = `count is ${counter}`
+import m from 'mithril'
+
+export interface CounterAttrs {
+  initialValue?: number
+}
+
+export interface CounterState {
+  count: number
+}
+
+export const Counter: m.Component<CounterAttrs, CounterState> = {
+  oninit(vnode) {
+    vnode.state.count = vnode.attrs.initialValue || 0
+  },
+  
+  view(vnode) {
+    return m('div.card',
+      m('button', {
+        onclick: () => {
+          vnode.state.count++
+        }
+      }, `count is ${vnode.state.count}`)
+    )
   }
-  element.addEventListener('click', () => setCounter(counter + 1))
-  setCounter(0)
 }

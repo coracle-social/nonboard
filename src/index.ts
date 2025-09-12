@@ -1,21 +1,29 @@
-export { Counter } from './components/Counter'
-export { mountComponent, unmountComponent } from './mount'
-export type { CounterAttrs, CounterState } from './components/Counter'
-export type { MountOptions } from './mount'
+import m from 'mithril'
+import type {PartialApplicationOptions} from './options'
+import {applyDefaultOptions} from './options'
+import {createApplicationState} from './state'
+import {Card} from './Card'
+import {createLoginButton} from './LoginButton'
+import {createSignupButton} from './SignupButton'
 
-import { Counter } from './components/Counter'
-import type { CounterAttrs } from './components/Counter'
-import { mountComponent } from './mount'
-import type { MountOptions } from './mount'
+export default (partialOptions: PartialApplicationOptions) => {
+  const options = applyDefaultOptions(partialOptions)
+  const state = createApplicationState(options)
+  const LoginButton = createLoginButton(options, state)
+  const SignupButton = createSignupButton(options, state)
 
-export function createCounter(selector: string | Element, attrs?: CounterAttrs, options?: MountOptions) {
-  return mountComponent(Counter, attrs, { selector, ...options })
-}
+  return {
+    renderDefault(selector: Element) {
+      m.render(selector, [
+        m(Card, [
+          m(LoginButton, {
+            class: "nb-button-accent",
+          }),
+          m(SignupButton),
+        ])
+      ])
 
-export const components = {
-  Counter
-}
-
-export const creators = {
-  createCounter
+      return () => m.render(selector, null)
+    },
+  }
 }

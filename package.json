@@ -27,6 +27,7 @@
     "vite": "^7.1.2"
   },
   "dependencies": {
-    "mithril": "^2.3.7"
+    "mithril": "^2.3.7",
+    "svelte": "^5.38.10"
   }
 }

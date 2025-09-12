@@ -4,16 +4,19 @@ import type {LoginButtonAttrs} from './LoginButton'
 import type {SignupButtonAttrs} from './SignupButton'
 
 export type ApplicationOptions = {
+  history: History
   loginButtonAttrs: LoginButtonAttrs
   signupButtonAttrs: SignupButtonAttrs
 }
 
 export type PartialApplicationOptions = {
+  history?: History
   loginButtonAttrs?: Partial<LoginButtonAttrs>
   signupButtonAttrs?: Partial<SignupButtonAttrs>
 }
 
 export const defaultApplicationOptions: ApplicationOptions = {
+  history: window.history,
   loginButtonAttrs: {
     icon: IconLogin,
     title: "Log in",
@@ -26,14 +29,14 @@ export const defaultApplicationOptions: ApplicationOptions = {
   },
 }
 
-export const applyDefaultOptions = (options: PartialApplicationOptions): ApplicationOptions => {
-  options = {...options}
+export const createOptions = (options: PartialApplicationOptions): ApplicationOptions => {
+  const newOptions: any = {...options}
 
   for (const [k, defaults] of Object.entries(defaultApplicationOptions)) {
-    const overrides = options[k as keyof ApplicationOptions] || {}
+    const overrides = newOptions[k] || {}
 
-    options[k as keyof ApplicationOptions] = {...defaults, ...overrides}
+    newOptions[k] = {...defaults, ...overrides}
   }
 
-  return options as ApplicationOptions
+  return newOptions as ApplicationOptions
 }

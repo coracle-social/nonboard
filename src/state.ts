@@ -1,16 +1,13 @@
 import type {Writable} from 'svelte/store'
 import {writable} from 'svelte/store'
-import type {ApplicationOptions} from './options'
 import {Screen} from './screen'
 
-export type ApplicationState = {
-  screen: Writable<Screen>
+export type ApplicationState = Writable<{
+  screen: Screen
+}>
+
+export const defaultState = {
+  screen: Screen.Landing
 }
 
-export const createApplicationState = (options: ApplicationOptions): ApplicationState => {
-  const screen = writable<Screen>(Screen.Landing)
-
-  return {
-    screen,
-  }
-}
+export const createState = (): ApplicationState => writable(defaultState)

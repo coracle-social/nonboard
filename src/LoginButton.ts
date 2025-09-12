@@ -1,6 +1,5 @@
 import m from 'mithril'
-import type {ApplicationOptions} from './options'
-import type {ApplicationState} from './state'
+import type {Application} from './application'
 import {Screen} from './screen'
 import {CardButton} from './CardButton'
 
@@ -10,8 +9,8 @@ export type LoginButtonAttrs = m.Attributes & {
   subtitle: string
 }
 
-export const createLoginButton = (options: ApplicationOptions, state: ApplicationState): m.Component<Partial<LoginButtonAttrs>> => ({
+export const createLoginButton = ({options, actions}: Application): m.Component<Partial<LoginButtonAttrs>> => ({
   view(vnode) {
-    return m(CardButton, {...vnode.attrs, ...options.loginButtonAttrs, onclick: () => state.screen.set(Screen.Login)})
+    return m(CardButton, {...vnode.attrs, ...options.loginButtonAttrs, onclick: () => actions.goto(Screen.Login)})
   }
 })

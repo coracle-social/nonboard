@@ -1,6 +1,6 @@
 # Nonboard
 
-A library of MithrilJS components with convenient mounting functions.
+A Nostr onboarding widget built with MithrilJS that helps users get started with Nostr.
 
 ## Installation
 
@@ -15,58 +15,52 @@ pnpm add nonboard
 ### Quick Start
 
 ```javascript
-import { createCounter } from 'nonboard'
+import nb from 'nonboard'
 
-// Mount a counter to an element with ID "app"
-createCounter('#app', { initialValue: 0 })
-```
-
-### Manual Component Usage
-
-```javascript
-import { Counter, mountComponent } from 'nonboard'
-
-// Mount the Counter component manually
-mountComponent(Counter, { initialValue: 5 }, {
-  selector: '#my-element',
-  replace: false
+// Create and render the onboarding widget
+const widget = nb({
+  onLogin: (payload) => {
+    // Handle successful login
+    if ('nip07' in payload) {
+      console.log('Logged in with NIP-07:', payload.nip07.pubkey)
+    } else if ('nip46' in payload) {
+      console.log('Logged in with NIP-46:', payload.nip46.pubkey)
+    } else if ('nip55' in payload) {
+      console.log('Logged in with NIP-55:', payload.nip55.pubkey, payload.nip55.signer)
+    }
+  },
+  onError: (error) => {
+    // Handle errors during login/signup process
+    console.error('Onboarding error:', error)
+  }
 })
+
+// Mount to a DOM element
+const targetElement = document.getElementById('target')
+const cleanup = widget.render(targetElement)
+
+// Call cleanup() when you need to unmount
 ```
 
-### Available Components
+## API Reference
 
-#### Counter
+### `nb(options)`
 
-A simple counter component that displays a button with click count.
+Creates a new onboarding widget instance.
 
-**Props:**
-- `initialValue?: number` - Starting value for the counter (default: 0)
+**Parameters:**
+- `options: PartialApplicationOptions` - Configuration options for the widget
 
-### API Reference
+**Returns:** An object with a `render` method.
 
-#### `createCounter(selector, attrs?, options?)`
+### `widget.render(element)`
 
-Convenient function to mount a Counter component.
+Renders the widget to the specified DOM element.
 
-- `selector: string | Element` - CSS selector or DOM element to mount to
-- `attrs?: CounterAttrs` - Component attributes
-- `options?: MountOptions` - Mounting options
+**Parameters:**
+- `element: Element` - DOM element to render the widget into
 
-#### `mountComponent(component, attrs?, options?)`
-
-Generic function to mount any component.
-
-- `component: m.Component<T>` - MithrilJS component to mount
-- `attrs?: T` - Component attributes
-- `options?: MountOptions` - Mounting options
-  - `selector?: string | Element` - Where to mount (default: document.body)
-  - `replace?: boolean` - Whether to replace content or append (default: false)
-
-#### `unmountComponent(selector?)`
-
-Unmount a component from the specified element.
-
-- `selector?: string | Element` - Element to unmount from (default: document.body)
+**Returns:** A cleanup function that can be called to unmount the widget and clean up subscriptions.
 
 ## Development
 

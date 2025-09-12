@@ -1,0 +1,32 @@
+{
+  "name": "nonboard",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./style.css": "./dist/index.css"
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build --mode=lib",
+    "build:lib": "tsc && vite build --mode=lib",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "@types/mithril": "^2.2.7",
+    "typescript": "~5.8.3",
+    "vite": "^7.1.2"
+  },
+  "dependencies": {
+    "mithril": "^2.3.7"
+  }
+}

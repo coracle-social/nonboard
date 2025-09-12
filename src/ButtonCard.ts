@@ -2,13 +2,13 @@ import m from 'mithril'
 import IconArrowRight from './IconArrowRight.svg'
 import {Icon} from './Icon'
 
-export type CardButtonAttrs = m.Attributes & {
+export type ButtonCardAttrs = m.Attributes & {
   icon: string
   title: string
   subtitle: string
 }
 
-export const CardButton: m.Component<CardButtonAttrs> = {
+export const ButtonCard: m.Component<ButtonCardAttrs> = {
   view(vnode) {
     const {icon, title, subtitle, ...attrs} = vnode.attrs
 

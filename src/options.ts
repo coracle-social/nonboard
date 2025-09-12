@@ -1,22 +1,51 @@
+import {deepMergeLeft} from '@welshman/lib'
+import type {MakeOptional} from '@welshman/lib'
 import IconLogin from './IconLogin.svg'
 import IconRocket from './IconRocket.svg'
 import type {LoginButtonAttrs} from './LoginButton'
 import type {SignupButtonAttrs} from './SignupButton'
+import {ApplicationError} from './error'
+
+export type Nip55SignerApp = {
+  name: string
+  packageName: string
+}
+
+export type Nip07LoginPayload = {
+  nip07: {
+    pubkey: string
+  }
+}
+
+export type Nip46LoginPayload = {
+  nip46: {
+    pubkey: string
+  }
+}
+
+export type Nip55LoginPayload = {
+  nip55: {
+    pubkey: string
+    signer: Nip55SignerApp
+  }
+}
+
+export type LoginPayload = Nip07LoginPayload | Nip46LoginPayload | Nip55LoginPayload
 
 export type ApplicationOptions = {
   history: History
+  nip55SignerApps: Nip55SignerApp[]
   loginButtonAttrs: LoginButtonAttrs
   signupButtonAttrs: SignupButtonAttrs
+  onLogin: (payload: LoginPayload) => void
+  onError: (error: ApplicationError) => void
 }
 
-export type PartialApplicationOptions = {
-  history?: History
-  loginButtonAttrs?: Partial<LoginButtonAttrs>
-  signupButtonAttrs?: Partial<SignupButtonAttrs>
-}
+export type PartialApplicationOptions = MakeOptional<ApplicationOptions, 'history' | 'nip55SignerApps' | 'loginButtonAttrs' | 'signupButtonAttrs'>
 
-export const defaultApplicationOptions: ApplicationOptions = {
+export const defaultApplicationOptions = {
   history: window.history,
+  nip55SignerApps: [],
   loginButtonAttrs: {
     icon: IconLogin,
     title: "Log in",
@@ -29,14 +58,5 @@ export const defaultApplicationOptions: ApplicationOptions = {
   },
 }
 
-export const createOptions = (options: PartialApplicationOptions): ApplicationOptions => {
-  const newOptions: any = {...options}
-
-  for (const [k, defaults] of Object.entries(defaultApplicationOptions)) {
-    const overrides = newOptions[k] || {}
-
-    newOptions[k] = {...defaults, ...overrides}
-  }
-
-  return newOptions as ApplicationOptions
-}
+export const createOptions = (options: PartialApplicationOptions) =>
+  deepMergeLeft(options, defaultApplicationOptions) as ApplicationOptions

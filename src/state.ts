@@ -1,13 +1,16 @@
-import type {Writable} from 'svelte/store'
+import {withGetter} from '@welshman/store'
+import type {WritableWithGetter} from '@welshman/store'
 import {writable} from 'svelte/store'
-import {Screen} from './screen'
+import {View} from './view'
 
-export type ApplicationState = Writable<{
-  screen: Screen
-}>
-
-export const defaultState = {
-  screen: Screen.Landing
+export type ApplicationStateValues = {
+  view: View
 }
 
-export const createState = (): ApplicationState => writable(defaultState)
+export type ApplicationState = WritableWithGetter<ApplicationStateValues>
+
+export const defaultState = {
+  view: View.Landing
+}
+
+export const createState = (): ApplicationState => withGetter(writable(defaultState))

@@ -18,19 +18,17 @@ export default (opts: PartialApplicationOptions) => {
     components,
   })
 
-  const render = <A, S>(selector: Element, component: m.Component<A, S>) => {
-    m.render(selector, m(component))
-
-    const unsubscribe = state.subscribe(() => m.redraw())
-
-    return () => {
-      unsubscribe()
-      actions.destroy()
-      m.render(selector, null)
-    }
-  }
-
   return {
-    renderDefault: (selector: Element) => render(selector, components.createApplicationDefault(application))
+    render: (selector: Element) => {
+      m.mount(selector, components.createLayout(application))
+
+      const unsubscribe = state.subscribe(s => m.redraw())
+
+      return () => {
+        unsubscribe()
+        actions.destroy()
+        m.render(selector, null)
+      }
+    },
   }
 }

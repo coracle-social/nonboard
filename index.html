@@ -22,15 +22,6 @@
         -moz-osx-font-smoothing: grayscale;
       }
 
-      a {
-        font-weight: 500;
-        color: #646cff;
-        text-decoration: inherit;
-      }
-      a:hover {
-        color: #535bf2;
-      }
-
       body {
         margin: 0;
         display: flex;
@@ -69,15 +60,21 @@
 
       .read-the-docs {
         color: #888;
+        font-weight: 500;
+        color: #646cff;
+        text-decoration: inherit;
       }
 
+      .read-the-docs:hover {
+        color: #535bf2;
+      }
 
       @media (prefers-color-scheme: light) {
         :root {
           color: #213547;
-          background-color: #ffffff;
+          background-color: #eee;
         }
-        a:hover {
+        .read-the-docs:hover {
           color: #747bff;
         }
         button {
@@ -102,7 +99,14 @@
       import nb from './src/index'
 
       nb({
-
+        onLogin: payload => {
+          console.log("logged in:", payload)
+          alert(`Logged in with ${Object.keys(payload)}`)
+        },
+        onError: error => {
+          console.log("recevied error:", error)
+          alert(`Encountered an error: ${error}`)
+        },
       }).render(target)
     </script>
   </body>

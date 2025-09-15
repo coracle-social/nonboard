@@ -6,16 +6,22 @@ import type {Nip55SignerApp} from './options'
 import {Nip07LoginError, Nip55LoginError} from './error'
 import {View} from './view'
 import IconWidget from './IconWidget.svg'
-import IconLoading from './IconLoading.svg'
 import IconCPU from './IconCPU.svg'
 import IconCompass from './IconCompass.svg'
 import {Card} from './Card'
+import {Small} from './Small'
+import {CardHeader} from './CardHeader'
+import {Title} from './Title'
+import {Subtitle} from './Subtitle'
 import {Icon} from './Icon'
 import {Button} from './Button'
+import {ButtonLink} from './ButtonLink'
 
 export const createLogin = (app: Application): () => m.Component => {
   return () => {
     let loading = ""
+
+    const nip07 = getNip07()
 
     const setLoading = (value: string) => {
       loading = value
@@ -28,7 +34,7 @@ export const createLogin = (app: Application): () => m.Component => {
       setLoading("nip07")
 
       try {
-        const pubkey = await getNip07()?.getPublicKey()
+        const pubkey = await nip07?.getPublicKey()
 
         if (pubkey) {
           app.options.onLogin({
@@ -69,55 +75,57 @@ export const createLogin = (app: Application): () => m.Component => {
     return {
       view(vnode) {
         return m(Card, [
-          m('p.nb-title', "Log in with Nostr"),
-          m('p.nb-subtitle', [
-            "This app is built using the",
-            m('a.nb-link', {onclick: () => void 0}, "Nostr protocol"),
-            ", which allows you to own your social identity.",
+          m(CardHeader, [
+            m(Title, "Log in with Nostr"),
+            m(Subtitle, [
+              "This app is built using the ",
+              m('a.nb-link', {href: "https://nostr.com/"}, "Nostr protocol"),
+              ", which allows you to own your social identity.",
+            ]),
           ]),
-          getNip07() && m(Button, {
-            class: 'nb-button-accent',
+          nip07 && m(Button, {
+            class: 'nb-button-primary',
             disabled: Boolean(loading),
             onclick: loginWithNip07,
           }, [
-            loading === 'nip07'
-              ? m(Icon, {url: IconLoading, spin: true})
-              : m(Icon, {url: IconWidget}),
-            "Log in with extension",
+            m(Icon, {url: IconWidget, showLoading: loading === 'nip07'}),
+            "Log in with Extension",
           ]),
           ...app.options.nip55SignerApps.map(signer =>
             m(Button, {
-              class: 'nb-button-accent',
+              class: cx({'nb-button-primary': !nip07}),
               disabled: Boolean(loading),
               onclick: () => loginWithNip55(signer),
             }, [
-              loading === 'nip55'
-                ? m(Icon, {url: IconLoading, spin: true})
-                : m(Icon, {url: IconWidget}),
+              m(Icon, {url: IconWidget, showLoading: loading === 'nip55'}),
               `Log in with ${signer.name}`,
             ])
           ),
           m(Button, {
-            class: cx({'nb-button-accent': getNip07() || app.options.nip55SignerApps.length > 0}),
+            class: cx({
+              'nb-button-primary': !nip07 && app.options.nip55SignerApps.length === 0,
+              'nb-button-secondary': nip07 || app.options.nip55SignerApps.length > 0,
+            }),
             disabled: Boolean(loading),
             onclick: loginWithBunker,
           }, [
              m(Icon, {url: IconCPU}),
-            `Log in with remote signer`,
+            `Log in with Remote Signer`,
           ]),
-          m('a.nb-button', {
+          m(ButtonLink, {
             href: "https://nostrapps.com#signers",
             target: "_blank",
             disabled: Boolean(loading),
           }, [
              m(Icon, {url: IconCompass}),
-            `Browse signer apps`,
+            `Browse Signer Apps`,
           ]),
-          m('div', [
-            'Need an account?',
+          m(Small, [
+            'Need an account? ',
             m(Button, {
               class: "nb-button-link",
               onclick: signup,
+              disabled: Boolean(loading),
             }, [
               `Register instead`,
             ]),

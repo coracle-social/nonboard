@@ -10,7 +10,7 @@ export const createLanding = (app: Application): m.Component => {
     view(vnode) {
       return m(Card, [
         m(LoginButton, {
-          class: "nb-button-accent",
+          class: "nb-button-primary",
         }),
         m(SignupButton),
       ])

@@ -7,6 +7,7 @@ import IconLoading from './IconLoading.svg'
 import IconLogin from './IconLogin.svg'
 import IconQRCode from './IconQRCode.svg'
 import IconRocket from './IconRocket.svg'
+import IconUser from './IconUser.svg'
 import IconWidget from './IconWidget.svg'
 
 export type Translations = {
@@ -41,6 +42,18 @@ export const defaultTranslations: Translations = {
   "signup.key.button": "Generate a key",
   "signup.back.button": "Go back",
   "signup.back.icon": IconArrowLeft,
+  "signup.profile.title": "Create your Profile",
+  "signup.profile.subtitle": "Give people something to go on — but remember, privacy matters! Be careful about sharing sensitive information.",
+  "signup.profile.avatar.label": "Upload an avatar",
+  "signup.profile.name.icon": IconUser,
+  "signup.profile.name.label": "Nickname",
+  "signup.profile.name.help": "What would you like people to call you?",
+  "signup.profile.about.label": "About You",
+  "signup.profile.about.help": "Give a brief introduction to why you're here.",
+  "signup.profile.submit.button": "Create Account",
+  "signup.profile.back.button": "Go back",
+  "signup.profile.back.icon": IconArrowLeft,
+  "signup.profile.submit.icon": IconArrowRight,
   "bunker.title": "Log in with a Signer",
   "bunker.subtitle": "Using a remote signer app helps you keep your keys safe.",
   "bunker.label": "Bunker Link*",

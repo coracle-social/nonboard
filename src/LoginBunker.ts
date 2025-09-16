@@ -148,7 +148,7 @@ export const createLoginBunker = (app: Application) => (): m.Component => {
       if (loading) {
         elements.push(
           m(Row, {
-            class: 'nb-justify-center nb-align-center nb-gap-2',
+            class: 'nb-justify-center nb-items-center nb-gap-2',
           }, [
             m(Icon, {loading: true}),
             app.tr('bunker.connecting')

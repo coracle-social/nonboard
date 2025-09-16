@@ -33,6 +33,7 @@
     "@welshman/signer": "^0.4.6",
     "@welshman/store": "^0.4.6",
     "classnames": "^2.5.1",
+    "compressorjs": "^1.2.1",
     "mithril": "^2.3.7",
     "qr-scanner": "^1.4.2",
     "qrcode": "^1.5.4",

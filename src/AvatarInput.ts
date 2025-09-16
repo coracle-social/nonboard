@@ -8,7 +8,7 @@ import IconGallery from './IconGallery.svg'
 import {Icon} from './Icon'
 
 export type AvatarInputAttrs = {
-  onChange: (file: File) => void
+  onChange: (file: File | undefined) => void
 }
 
 export const AvatarInput = (): m.Component<AvatarInputAttrs> => {

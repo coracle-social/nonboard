@@ -32,6 +32,9 @@ importers:
       mithril:
         specifier: ^2.3.7
         version: 2.3.7
+      nostr-tools:
+        specifier: ^2.16.2
+        version: 2.16.2(typescript@5.8.3)
       qr-scanner:
         specifier: ^1.4.2
         version: 1.4.2

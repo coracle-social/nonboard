@@ -5,6 +5,7 @@ export const View = {
   Signup: 'signup',
   SignupProfile: 'signup-profile',
   SignupKey: 'signup-key',
+  SignupComplete: 'signup-complete',
 } as const;
 
 export type View = typeof View[keyof typeof View];

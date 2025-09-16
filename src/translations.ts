@@ -1,3 +1,4 @@
+import IconArrowDown from './IconArrowDown.svg'
 import IconArrowLeft from './IconArrowLeft.svg'
 import IconArrowRight from './IconArrowRight.svg'
 import IconCompass from './IconCompass.svg'
@@ -54,6 +55,21 @@ export const defaultTranslations: Translations = {
   "signup.profile.back.button": "Go back",
   "signup.profile.back.icon": IconArrowLeft,
   "signup.profile.submit.icon": IconArrowRight,
+  "signup.key.title": "Your Keys are Ready!",
+  "signup.key.subtitle": "Now it's time to store them safely.",
+  "signup.key.info.1": "A cryptographic key pair has two parts: your public key identifies your account, while your private key acts sort of like a master password.",
+  "signup.key.info.2": "Securing your private key is very important, so make sure to take the time to save your key in a secure place (like a password manager).",
+  'signup.key.password.label': "Password*",
+  "signup.key.password.icon": IconKey,
+  "signup.key.password.help": "Passwords should be at least 12 characters long. Write this down!",
+  'signup.key.download.text': "Download my key",
+  'signup.key.download.icon': IconArrowDown,
+  'signup.key.togglePassword.on': "Nevermind, I want to download the plain version",
+  'signup.key.togglePassword.off': "I want to download an encrypted version",
+  'signup.key.back.icon': IconArrowLeft,
+  'signup.key.back.text': "Go back",
+  'signup.key.next.icon': IconArrowRight,
+  'signup.key.next.text': "Continue",
   "bunker.title": "Log in with a Signer",
   "bunker.subtitle": "Using a remote signer app helps you keep your keys safe.",
   "bunker.label": "Bunker Link*",
@@ -63,9 +79,9 @@ export const defaultTranslations: Translations = {
   "bunker.scan.instructions": "Scan with your signer to log in, or click to copy.",
   "bunker.cpu.icon": IconCPU,
   "bunker.qr.icon": IconQRCode,
-  "bunker.back.button": "Go back",
+  "bunker.back.text": "Go back",
   "bunker.back.icon": IconArrowLeft,
-  "bunker.next.button": "Next",
+  "bunker.next.text": "Next",
   "bunker.next.icon": IconArrowRight,
   "scanner.loading": "Loading your camera...",
   "card.arrow.icon": IconArrowRight,

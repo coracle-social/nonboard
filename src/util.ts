@@ -1,11 +1,11 @@
-export const preventDefault = (f: () => unknown) => (event: Event) => {
+export const preventDefault = <T extends Event>(f: (e: T) => unknown) => (event: T) => {
   event.preventDefault()
-  f()
+  f(event)
 }
 
-export const stopPropagation = (f: () => unknown) => (event: Event) => {
+export const stopPropagation = <T extends Event>(f: (e: T) => unknown) => (event: T) => {
   event.stopPropagation()
-  f()
+  f(event)
 }
 
 export const copyToClipboard = (text: string) => {
@@ -24,9 +24,9 @@ export const copyToClipboard = (text: string) => {
   return result
 }
 
-export const stripExifData = async (file, {maxWidth = null, maxHeight = null} = {}) => {
+export const stripExifData = async (file: File) => {
   if (window.DataTransferItem && file instanceof DataTransferItem) {
-    file = file.getAsFile()
+    file = file.getAsFile() as File
   }
 
   if (!file) {
@@ -37,12 +37,12 @@ export const stripExifData = async (file, {maxWidth = null, maxHeight = null} = 
 
   /* eslint no-new: 0 */
 
-  return new Promise((resolve, _reject) => {
+  return new Promise<File>((resolve, _reject) => {
     new Compressor(file, {
-      maxWidth: maxWidth || 2048,
-      maxHeight: maxHeight || 2048,
+      maxWidth: 480,
+      maxHeight: 480,
       convertSize: 10 * 1024 * 1024,
-      success: resolve,
+      success: file => resolve(file as File),
       error: e => {
         // Non-images break compressor
         if (e.toString().includes("File or Blob")) {
@@ -53,4 +53,17 @@ export const stripExifData = async (file, {maxWidth = null, maxHeight = null} = 
       },
     })
   })
+}
+
+export const downloadText = (filename: string, text: string) => {
+  const blob = new Blob([text], {type: "text/plain"})
+  const url = URL.createObjectURL(blob)
+  const a = document.createElement("a")
+
+  a.href = url
+  a.download = filename
+  document.body.appendChild(a)
+  a.click()
+  document.body.removeChild(a)
+  URL.revokeObjectURL(url)
 }

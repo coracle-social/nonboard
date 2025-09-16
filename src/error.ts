@@ -25,3 +25,10 @@ export class Nip55LoginError extends ApplicationError {
     this.name = "Nip55LoginError"
   }
 }
+
+export class SignupKeyError extends ApplicationError {
+  constructor(message: string) {
+    super(message)
+    this.name = "SignupKeyError"
+  }
+}

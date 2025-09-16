@@ -255,7 +255,7 @@ export const createLoginBunker = (app: Application) => (): m.Component => {
               },
             }, [
               m(Icon, {url: app.tr('bunker.back.icon')}),
-              app.tr('bunker.back.button'),
+              app.tr('bunker.back.text'),
             ]),
             m(Button, {
               type: "submit",
@@ -263,7 +263,7 @@ export const createLoginBunker = (app: Application) => (): m.Component => {
               disabled: Boolean(loading || !bunkerUrl),
             }, [
               m(Icon, {loading}),
-              app.tr('bunker.next.button'),
+              app.tr('bunker.next.text'),
               m(Icon, {url: app.tr('bunker.next.icon')}),
             ]),
           ]),

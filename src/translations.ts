@@ -2,6 +2,7 @@ import IconArrowLeft from './IconArrowLeft.svg'
 import IconArrowRight from './IconArrowRight.svg'
 import IconCompass from './IconCompass.svg'
 import IconCPU from './IconCPU.svg'
+import IconKey from './IconKey.svg'
 import IconLoading from './IconLoading.svg'
 import IconLogin from './IconLogin.svg'
 import IconQRCode from './IconQRCode.svg'
@@ -34,6 +35,12 @@ export const defaultTranslations: Translations = {
   "login.browse.icon": IconCompass,
   "login.back.button": "Go back",
   "login.back.icon": IconArrowLeft,
+  "signup.title": "Sign up with Nostr",
+  "signup.subtitle": "Take control of your digital identity by generating a cryptographic key pair.",
+  "signup.key.icon": IconKey,
+  "signup.key.button": "Generate a key",
+  "signup.back.button": "Go back",
+  "signup.back.icon": IconArrowLeft,
   "bunker.title": "Log in with a Signer",
   "bunker.subtitle": "Using a remote signer app helps you keep your keys safe.",
   "bunker.label": "Bunker Link*",

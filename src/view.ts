@@ -3,6 +3,7 @@ export const View = {
   Login: 'login',
   LoginBunker: 'login-bunker',
   Signup: 'signup',
+  SignupProfile: 'signup-profile',
 } as const;
 
 export type View = typeof View[keyof typeof View];

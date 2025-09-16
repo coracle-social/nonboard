@@ -4,6 +4,7 @@ import {createLanding} from './Landing'
 import {createLogin} from './Login'
 import {createLoginBunker} from './LoginBunker'
 import {createSignup} from './Signup'
+import {createSignupProfile} from './SignupProfile'
 
 export type ApplicationComponents = {
   createLayout: typeof createLayout
@@ -11,6 +12,7 @@ export type ApplicationComponents = {
   createLogin: typeof createLogin
   createLoginBunker: typeof createLoginBunker
   createSignup: typeof createSignup
+  createSignupProfile: typeof createSignupProfile
 }
 
 export const createComponents = (): ApplicationComponents => {
@@ -20,5 +22,6 @@ export const createComponents = (): ApplicationComponents => {
     createLogin: memoize(createLogin),
     createLoginBunker: memoize(createLoginBunker),
     createSignup: memoize(createSignup),
+    createSignupProfile: memoize(createSignupProfile),
   }
 }

@@ -7,6 +7,7 @@ export const createLayout = (app: Application): m.Component => {
   const Login = app.components.createLogin(app)
   const LoginBunker = app.components.createLoginBunker(app)
   const Signup = app.components.createSignup(app)
+  const SignupProfile = app.components.createSignupProfile(app)
 
   return {
     view(vnode) {
@@ -15,6 +16,7 @@ export const createLayout = (app: Application): m.Component => {
         case View.Login: return m(Login)
         case View.LoginBunker: return m(LoginBunker)
         case View.Signup: return m(Signup)
+        case View.SignupProfile: return m(SignupProfile)
       }
     }
   }

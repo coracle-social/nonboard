@@ -69,7 +69,7 @@ export const createLoginBunker = (app: Application) => (): m.Component => {
 
       if (!signerPubkey || relays.length === 0) {
         return app.options.onError(
-          new Nip46LoginError("Sorry, it looks like that's an invalid bunker link.")
+          new Nip46LoginError(app.tr('error.bunker.invalid'))
         )
       }
 
@@ -93,7 +93,7 @@ export const createLoginBunker = (app: Application) => (): m.Component => {
         })
       } else {
         app.options.onError(
-          new Nip46LoginError("Something went wrong, please try again!")
+          new Nip46LoginError(app.tr('error.generic'))
         )
       }
     } catch (e) {
@@ -123,7 +123,7 @@ export const createLoginBunker = (app: Application) => (): m.Component => {
         })
       } else {
         app.options.onError(
-          new Nip46LoginError("Something went wrong! Please try again.")
+          new Nip46LoginError(app.tr('error.generic'))
         )
       }
     } finally {
@@ -138,7 +138,7 @@ export const createLoginBunker = (app: Application) => (): m.Component => {
 
   const copyConnectUrl = () => {
     copyToClipboard(connectUrl)
-    app.options.onInfo("Copied to clipboard!")
+    app.options.onInfo(app.tr('info.copied'))
   }
 
   const renderConnect = () => {
@@ -151,7 +151,7 @@ export const createLoginBunker = (app: Application) => (): m.Component => {
             class: 'nb-justify-center nb-align-center nb-gap-2',
           }, [
             m(Icon, {loading: true}),
-            "Establishing connection..."
+            app.tr('bunker.connecting')
           ])
         )
       } else {
@@ -159,7 +159,7 @@ export const createLoginBunker = (app: Application) => (): m.Component => {
           m(Column, [
             m(QRCode, {data: connectUrl, onclick: copyConnectUrl}),
             m(Small, {class: 'nb-text-center nb-faded'}, [
-              `Scan with your signer to log in, or click to copy.`,
+              app.tr('bunker.scan.instructions'),
             ])
           ])
         )
@@ -172,11 +172,11 @@ export const createLoginBunker = (app: Application) => (): m.Component => {
   const renderManual = () => {
     return m(Column, {class: 'nb-gap-4'}, [
       m(Field, [
-        m(Label, "Bunker Link*"),
+        m(Label, app.tr('bunker.label')),
         m(InputWrapper, {
-          before: m(Icon, {url: app.options.translations['bunker.cpu.icon']}),
+          before: m(Icon, {url: app.tr('bunker.cpu.icon')}),
           after: m(Icon, {
-            url: app.options.translations['bunker.qr.icon'],
+            url: app.tr('bunker.qr.icon'),
             onclick: toggleScanner,
           }),
         }, [
@@ -185,7 +185,7 @@ export const createLoginBunker = (app: Application) => (): m.Component => {
             oninput: (e: Event & {target: HTMLInputElement}) => setBunkerUrl(e.target.value),
           }),
         ]),
-        m(Small, {class: 'nb-faded'}, "A login link provided by a nostr signing app."),
+        m(Small, {class: 'nb-faded'}, app.tr('bunker.help')),
       ]),
       scanner
         ? m(Scanner, {onscan})
@@ -193,7 +193,7 @@ export const createLoginBunker = (app: Application) => (): m.Component => {
             class: cx({'nb-button-secondary': !bunkerUrl}),
             onclick: toggleConnect,
           }, [
-            `Log in with a QR code instead`,
+            app.tr('bunker.qr.button'),
           ])
     ])
   }
@@ -214,7 +214,7 @@ export const createLoginBunker = (app: Application) => (): m.Component => {
         } catch (errorResponse: any) {
           if (errorResponse?.error) {
             app.options.onError(
-              new Nip46LoginError(`Received error from signer: ${errorResponse.error}`)
+              new Nip46LoginError(`${app.tr('error.bunker.signer.prefix')} ${errorResponse.error}`)
             )
           } else if (errorResponse) {
             app.options.onError(
@@ -236,8 +236,8 @@ export const createLoginBunker = (app: Application) => (): m.Component => {
       return m('form', {onsubmit: preventDefault(onBunkerUrl)}, [
         m(Card, [
           m(CardHeader, [
-            m(Title, "Log in with a Signer"),
-            m(Subtitle, "Using a remote signer app helps you keep your keys safe."),
+            m(Title, app.tr('bunker.title')),
+            m(Subtitle, app.tr('bunker.subtitle')),
           ]),
           connect
             ? renderConnect()
@@ -254,8 +254,8 @@ export const createLoginBunker = (app: Application) => (): m.Component => {
                 }
               },
             }, [
-              m(Icon, {url: app.options.translations['bunker.back.icon']}),
-              `Go back`,
+              m(Icon, {url: app.tr('bunker.back.icon')}),
+              app.tr('bunker.back.button'),
             ]),
             m(Button, {
               type: "submit",
@@ -263,8 +263,8 @@ export const createLoginBunker = (app: Application) => (): m.Component => {
               disabled: Boolean(loading || !bunkerUrl),
             }, [
               m(Icon, {loading}),
-              `Next`,
-              m(Icon, {url: app.options.translations['bunker.next.icon']}),
+              app.tr('bunker.next.button'),
+              m(Icon, {url: app.tr('bunker.next.icon')}),
             ]),
           ]),
         ]),

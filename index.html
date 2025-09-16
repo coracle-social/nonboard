@@ -103,6 +103,9 @@
         appUrl: window.origin,
         appName: "Nonboard test",
         appImage: "https://hbr.coracle.social/daa09e37ff8c2db52f0b905e24b647e00db770f2a590bd197d27a5808666a656.jpg",
+        translations: {
+          "landing.signup.title": "Sign up",
+        },
         onLogin: payload => {
           console.log("logged in:", payload)
           alert(`Logged in with ${Object.keys(payload)}`)

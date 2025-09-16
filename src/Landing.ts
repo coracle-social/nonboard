@@ -9,15 +9,15 @@ export const createLanding = (app: Application): m.Component => ({
     return m(Card, [
       m(ButtonCard, {
         class: "nb-button-primary",
-        icon: app.options.translations['landing.login.icon'],
-        title: app.options.translations['landing.login.title'],
-        subtitle: app.options.translations['landing.login.subtitle'],
+        icon: app.tr('landing.login.icon'),
+        title: app.tr('landing.login.title'),
+        subtitle: app.tr('landing.login.subtitle'),
         onclick: () => app.actions.goto(View.Login),
       }),
       m(ButtonCard, {
-        icon: app.options.translations['landing.signup.icon'],
-        title: app.options.translations['landing.signup.title'],
-        subtitle: app.options.translations['landing.signup.subtitle'],
+        icon: app.tr('landing.signup.icon'),
+        title: app.tr('landing.signup.title'),
+        subtitle: app.tr('landing.signup.subtitle'),
         onclick: () => app.actions.goto(View.Signup),
       }),
     ])

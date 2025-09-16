@@ -39,7 +39,7 @@ export const createLogin = (app: Application) => (): m.Component => {
         })
       } else {
         app.options.onError(
-          new Nip07LoginError("Something went wrong! Please try again.")
+          new Nip07LoginError(app.tr('error.generic'))
         )
       }
     } finally {
@@ -59,7 +59,7 @@ export const createLogin = (app: Application) => (): m.Component => {
         })
       } else {
         app.options.onError(
-          new Nip55LoginError("Something went wrong! Please try again.")
+          new Nip55LoginError(app.tr('error.generic'))
         )
       }
     } finally {
@@ -71,11 +71,11 @@ export const createLogin = (app: Application) => (): m.Component => {
     view(vnode) {
       return m(Card, [
         m(CardHeader, [
-          m(Title, "Log in with Nostr"),
+          m(Title, app.tr('login.title')),
           m(Subtitle, [
-            "This app is built using the ",
-            m('a.nb-link', {href: "https://nostr.com/"}, "Nostr protocol"),
-            ", which allows you to own your social identity.",
+            app.tr('login.subtitle.prefix'),
+            m('a.nb-link', {href: "https://nostr.com/"}, app.tr('login.subtitle.link')),
+            app.tr('login.subtitle.suffix'),
           ]),
         ]),
         nip07 && m(Button, {
@@ -83,8 +83,8 @@ export const createLogin = (app: Application) => (): m.Component => {
           disabled: Boolean(loading),
           onclick: () => loginWithNip07(),
         }, [
-          m(Icon, {url: app.options.translations['login.extension.icon'], loading: loading === 'nip07'}),
-          "Log in with Extension",
+          m(Icon, {url: app.tr('login.extension.icon'), loading: loading === 'nip07'}),
+          app.tr('login.extension.button'),
         ]),
         ...app.options.nip55SignerApps.map(signer =>
           m(Button, {
@@ -92,8 +92,8 @@ export const createLogin = (app: Application) => (): m.Component => {
             disabled: Boolean(loading),
             onclick: () => loginWithNip55(signer),
           }, [
-            m(Icon, {url: app.options.translations['login.extension.icon'], loading: loading === 'nip55'}),
-            `Log in with ${signer.name}`,
+            m(Icon, {url: app.tr('login.extension.icon'), loading: loading === 'nip55'}),
+            `${app.tr('login.signer.prefix')} ${signer.name}`,
           ])
         ),
         m(Button, {
@@ -104,24 +104,24 @@ export const createLogin = (app: Application) => (): m.Component => {
           disabled: Boolean(loading),
           onclick: loginWithBunker,
         }, [
-           m(Icon, {url: app.options.translations['login.signer.icon']}),
-          `Log in with Remote Signer`,
+           m(Icon, {url: app.tr('login.signer.icon')}),
+          app.tr('login.signer.button'),
         ]),
         m(ButtonLink, {
           href: "https://nostrapps.com#signers",
           target: "_blank",
           disabled: Boolean(loading),
         }, [
-           m(Icon, {url: app.options.translations['login.browse.icon']}),
-          `Browse Signer Apps`,
+          m(Icon, {url: app.tr('login.browse.icon')}),
+          app.tr('login.browse.button'),
         ]),
         m(Button, {
           class: 'nb-button-link',
           onclick: () => app.actions.back(),
           disabled: Boolean(loading),
         }, [
-           m(Icon, {url: app.options.translations['login.back.icon']}),
-          'Go back',
+          m(Icon, {url: app.tr('login.back.icon')}),
+          app.tr('login.back.button'),
         ]),
       ])
     },

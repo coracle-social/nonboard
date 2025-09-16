@@ -1,6 +1,4 @@
 import {deepMergeLeft} from '@welshman/lib'
-import type {LoginButtonAttrs} from './LoginButton'
-import type {SignupButtonAttrs} from './SignupButton'
 import type {Translations} from './translations'
 import {defaultTranslations} from './translations'
 import {ApplicationError} from './error'

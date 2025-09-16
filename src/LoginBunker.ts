@@ -6,10 +6,6 @@ import {Nip46Broker, makeSecret} from "@welshman/signer"
 import type {Application} from './application'
 import {preventDefault, copyToClipboard} from './util'
 import {Nip46LoginError} from './error'
-import IconArrowRight from './IconArrowRight.svg'
-import IconArrowLeft from './IconArrowLeft.svg'
-import IconQRCode from './IconQRCode.svg'
-import IconCPU from './IconCPU.svg'
 import {Icon} from './Icon'
 import {Row} from './Row'
 import {Column} from './Column'
@@ -178,9 +174,9 @@ export const createLoginBunker = (app: Application) => (): m.Component => {
       m(Field, [
         m(Label, "Bunker Link*"),
         m(InputWrapper, {
-          before: m(Icon, {url: IconCPU}),
+          before: m(Icon, {url: app.options.translations['bunker.cpu.icon']}),
           after: m(Icon, {
-            url: IconQRCode,
+            url: app.options.translations['bunker.qr.icon'],
             onclick: toggleScanner,
           }),
         }, [
@@ -258,7 +254,7 @@ export const createLoginBunker = (app: Application) => (): m.Component => {
                 }
               },
             }, [
-              m(Icon, {url: IconArrowLeft}),
+              m(Icon, {url: app.options.translations['bunker.back.icon']}),
               `Go back`,
             ]),
             m(Button, {
@@ -268,7 +264,7 @@ export const createLoginBunker = (app: Application) => (): m.Component => {
             }, [
               m(Icon, {loading}),
               `Next`,
-              m(Icon, {url: IconArrowRight}),
+              m(Icon, {url: app.options.translations['bunker.next.icon']}),
             ]),
           ]),
         ]),

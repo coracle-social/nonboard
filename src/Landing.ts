@@ -15,8 +15,7 @@ export const createLanding = (app: Application): m.Component => ({
         onclick: () => app.actions.goto(View.Login),
       }),
       m(ButtonCard, {
-        class: "nb-button-primary",
-        icon: app.options.translations['landing.login.icon'],
+        icon: app.options.translations['landing.signup.icon'],
         title: app.options.translations['landing.signup.title'],
         subtitle: app.options.translations['landing.signup.subtitle'],
         onclick: () => app.actions.goto(View.Signup),

@@ -5,10 +5,6 @@ import type {Application} from './application'
 import type {Nip55SignerApp} from './options'
 import {Nip07LoginError, Nip55LoginError} from './error'
 import {View} from './view'
-import IconWidget from './IconWidget.svg'
-import IconArrowLeft from './IconArrowLeft.svg'
-import IconCPU from './IconCPU.svg'
-import IconCompass from './IconCompass.svg'
 import {Card} from './Card'
 import {CardHeader} from './CardHeader'
 import {Title} from './Title'
@@ -87,7 +83,7 @@ export const createLogin = (app: Application) => (): m.Component => {
           disabled: Boolean(loading),
           onclick: () => loginWithNip07(),
         }, [
-          m(Icon, {url: IconWidget, loading: loading === 'nip07'}),
+          m(Icon, {url: app.options.translations['login.extension.icon'], loading: loading === 'nip07'}),
           "Log in with Extension",
         ]),
         ...app.options.nip55SignerApps.map(signer =>
@@ -96,7 +92,7 @@ export const createLogin = (app: Application) => (): m.Component => {
             disabled: Boolean(loading),
             onclick: () => loginWithNip55(signer),
           }, [
-            m(Icon, {url: IconWidget, loading: loading === 'nip55'}),
+            m(Icon, {url: app.options.translations['login.extension.icon'], loading: loading === 'nip55'}),
             `Log in with ${signer.name}`,
           ])
         ),
@@ -108,7 +104,7 @@ export const createLogin = (app: Application) => (): m.Component => {
           disabled: Boolean(loading),
           onclick: loginWithBunker,
         }, [
-           m(Icon, {url: IconCPU}),
+           m(Icon, {url: app.options.translations['login.signer.icon']}),
           `Log in with Remote Signer`,
         ]),
         m(ButtonLink, {
@@ -116,7 +112,7 @@ export const createLogin = (app: Application) => (): m.Component => {
           target: "_blank",
           disabled: Boolean(loading),
         }, [
-           m(Icon, {url: IconCompass}),
+           m(Icon, {url: app.options.translations['login.browse.icon']}),
           `Browse Signer Apps`,
         ]),
         m(Button, {
@@ -124,7 +120,7 @@ export const createLogin = (app: Application) => (): m.Component => {
           onclick: () => app.actions.back(),
           disabled: Boolean(loading),
         }, [
-           m(Icon, {url: IconArrowLeft}),
+           m(Icon, {url: app.options.translations['login.back.icon']}),
           'Go back',
         ]),
       ])

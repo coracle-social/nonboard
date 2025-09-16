@@ -1,6 +1,4 @@
 import {deepMergeLeft} from '@welshman/lib'
-import IconLogin from './IconLogin.svg'
-import IconRocket from './IconRocket.svg'
 import type {LoginButtonAttrs} from './LoginButton'
 import type {SignupButtonAttrs} from './SignupButton'
 import type {Translations} from './translations'

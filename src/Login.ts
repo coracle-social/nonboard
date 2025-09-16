@@ -72,11 +72,7 @@ export const createLogin = (app: Application) => (): m.Component => {
       return m(Card, [
         m(CardHeader, [
           m(Title, app.tr('login.title')),
-          m(Subtitle, [
-            app.tr('login.subtitle.prefix'),
-            m('a.nb-link', {href: "https://nostr.com/"}, app.tr('login.subtitle.link')),
-            app.tr('login.subtitle.suffix'),
-          ]),
+          m(Subtitle, app.tr('login.subtitle')),
         ]),
         nip07 && m(Button, {
           class: 'nb-button-primary',

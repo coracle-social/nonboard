@@ -13,6 +13,10 @@ export type Translations = {
 }
 
 export const defaultTranslations: Translations = {
+  "landing.title": "Welcome to Nostr!",
+  "landing.subtitle.prefix": "This app is built using the ",
+  "landing.subtitle.link": "Nostr protocol",
+  "landing.subtitle.suffix": ", which allows you to own your social identity.",
   "landing.login.icon": IconLogin,
   "landing.login.title": "Log in",
   "landing.login.subtitle": "If you've used Nostr before, you know the drill.",
@@ -20,9 +24,7 @@ export const defaultTranslations: Translations = {
   "landing.signup.title": "Create an account",
   "landing.signup.subtitle": "Just a few questions and you'll be on your way.",
   "login.title": "Log in with Nostr",
-  "login.subtitle.prefix": "This app is built using the ",
-  "login.subtitle.link": "Nostr protocol",
-  "login.subtitle.suffix": ", which allows you to own your social identity.",
+  "login.subtitle": "Choose the login method that works best for you.",
   "login.extension.button": "Log in with Extension",
   "login.signer.prefix": "Log in with",
   "login.extension.icon": IconWidget,

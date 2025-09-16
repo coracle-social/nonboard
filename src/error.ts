@@ -12,6 +12,13 @@ export class Nip07LoginError extends ApplicationError {
   }
 }
 
+export class Nip46LoginError extends ApplicationError {
+  constructor(message: string) {
+    super(message)
+    this.name = "Nip46LoginError"
+  }
+}
+
 export class Nip55LoginError extends ApplicationError {
   constructor(message: string) {
     super(message)

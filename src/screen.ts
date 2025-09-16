@@ -1,7 +1,7 @@
 export const Screen = {
   Landing: 'landing',
   Login: 'login',
-  LoginBunker: 'login-bunker,
+  LoginBunker: 'login/bunker',
   Signup: 'signup',
 } as const;
 

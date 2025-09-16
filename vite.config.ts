@@ -17,7 +17,8 @@ export default defineConfig(({ mode }) => {
 
   return {
     server: {
-      port: 9273
+      port: 9273,
+      allowedHosts: ['coracle-client.ngrok.io'],
     },
   }
 })

@@ -1,4 +1,4 @@
-mport m from 'mithril'
+import m from 'mithril'
 import IconArrowRight from './IconArrowRight.svg'
 import {Icon} from './Icon'
 

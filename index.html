@@ -38,7 +38,6 @@
         max-width: 1280px;
         margin: 0 auto;
         padding: 2rem;
-        text-align: center;
       }
 
       .logo {
@@ -63,6 +62,8 @@
         font-weight: 500;
         color: #646cff;
         text-decoration: inherit;
+        text-align: center;
+        display: block;
       }
 
       .read-the-docs:hover {
@@ -96,18 +97,44 @@
       </div>
     </div>
     <script type="module">
-      import nb from './src/index'
+      import nb, {View} from './src/index'
 
-      nb({
+      let destroy
+
+      const app = nb({
+        appUrl: window.origin,
+        appName: "Nonboard test",
+        appImage: "https://hbr.coracle.social/daa09e37ff8c2db52f0b905e24b647e00db770f2a590bd197d27a5808666a656.jpg",
         onLogin: payload => {
           console.log("logged in:", payload)
           alert(`Logged in with ${Object.keys(payload)}`)
+          destroy()
+
+          const reset = document.createElement('button')
+
+          reset.textContent = "Flow complete! Start over?"
+          reset.classList.add("nb-button")
+          reset.classList.add("nb-button-secondary")
+          reset.style = "margin: 4rem auto;"
+          reset.addEventListener('click', init)
+
+          target.appendChild(reset)
         },
         onError: error => {
           console.log("recevied error:", error)
           alert(`Encountered an error: ${error}`)
         },
-      }).render(target)
+        onInfo: message => {
+          console.log("recevied info:", message)
+          alert(message)
+        },
+      })
+
+      const init = () => {
+        destroy = app.render(target)
+      }
+
+      init()
     </script>
   </body>
 </html>

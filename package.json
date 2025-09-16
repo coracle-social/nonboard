@@ -27,11 +27,16 @@
     "vite": "^7.1.2"
   },
   "dependencies": {
+    "@types/qrcode": "^1.5.5",
+    "@types/throttle-debounce": "^5.0.2",
     "@welshman/lib": "^0.4.6",
     "@welshman/signer": "^0.4.6",
     "@welshman/store": "^0.4.6",
     "classnames": "^2.5.1",
     "mithril": "^2.3.7",
-    "svelte": "^5.38.10"
+    "qr-scanner": "^1.4.2",
+    "qrcode": "^1.5.4",
+    "svelte": "^5.38.10",
+    "throttle-debounce": "^5.0.2"
   }
 }

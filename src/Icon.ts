@@ -2,18 +2,22 @@ import m from 'mithril'
 import cx from 'classnames'
 import IconLoading from './IconLoading.svg'
 
-export interface IconAttrs {
-  url: string
-  showLoading?: boolean
+export type IconAttrs = {
+  url?: string
+  loading?: boolean
 }
 
 export const Icon: m.Component<IconAttrs> = {
   view(vnode) {
-    const {url, showLoading} = vnode.attrs
-    const modifiedUrl = showLoading ? IconLoading : url
+    const {url, loading, ...attrs} = vnode.attrs
+    const modifiedUrl = loading ? IconLoading : url
 
     return m('div', {
-      class: cx('nb-icon', {'nb-spin': showLoading}),
+      ...attrs,
+      class: cx('nb-icon', {
+        'nb-spin': loading,
+        'nb-icon--clickable': attrs.onclick,
+      }),
       style: `mask-image: url("${modifiedUrl}");`,
     })
   }

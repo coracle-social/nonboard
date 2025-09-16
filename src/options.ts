@@ -1,5 +1,4 @@
 import {deepMergeLeft} from '@welshman/lib'
-import type {MakeOptional} from '@welshman/lib'
 import IconLogin from './IconLogin.svg'
 import IconRocket from './IconRocket.svg'
 import type {LoginButtonAttrs} from './LoginButton'
@@ -20,6 +19,9 @@ export type Nip07LoginPayload = {
 export type Nip46LoginPayload = {
   nip46: {
     pubkey: string
+    clientSecret: string,
+    signerPubkey: string,
+    relays: string[],
   }
 }
 
@@ -32,19 +34,36 @@ export type Nip55LoginPayload = {
 
 export type LoginPayload = Nip07LoginPayload | Nip46LoginPayload | Nip55LoginPayload
 
-export type ApplicationOptions = {
+export type RequiredApplicationOptions = {
+  appUrl: string
+  appName: string
+  appImage: string
+  onLogin: (payload: LoginPayload) => void
+  onError: (error: ApplicationError) => void
+  onInfo: (message: string) => void
+}
+
+export type OptionalApplicationOptions = {
   history: History
+  signerRelays: string[]
+  signerPermissions: string
   nip55SignerApps: Nip55SignerApp[]
   loginButtonAttrs: LoginButtonAttrs
   signupButtonAttrs: SignupButtonAttrs
-  onLogin: (payload: LoginPayload) => void
-  onError: (error: ApplicationError) => void
 }
 
-export type PartialApplicationOptions = MakeOptional<ApplicationOptions, 'history' | 'nip55SignerApps' | 'loginButtonAttrs' | 'signupButtonAttrs'>
+export type ApplicationOptions = RequiredApplicationOptions & OptionalApplicationOptions
+
+export type PartialApplicationOptions = RequiredApplicationOptions & Partial<OptionalApplicationOptions>
 
 export const defaultApplicationOptions = {
   history: window.history,
+  signerRelays: [
+    'wss://relay.nos.social/',
+    'wss://relay.nsec.app/',
+    'wss://offchain.pub/',
+  ],
+  signerPermissions: "",
   nip55SignerApps: [],
   loginButtonAttrs: {
     icon: IconLogin,

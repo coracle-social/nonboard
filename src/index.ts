@@ -1,3 +1,5 @@
+export * from './view'
+
 import m from 'mithril'
 import type {PartialApplicationOptions} from './options'
 import {createOptions} from './options'
@@ -19,15 +21,20 @@ export default (opts: PartialApplicationOptions) => {
   })
 
   return {
-    render: (selector: Element) => {
-      m.mount(selector, components.createLayout(application))
+    ...application,
+    render: (element: Element) => {
+      for (const child of element.childNodes) {
+        element.removeChild(child)
+      }
+
+      m.mount(element, components.createLayout(application))
 
       const unsubscribe = state.subscribe(s => m.redraw())
 
       return () => {
         unsubscribe()
         actions.destroy()
-        m.render(selector, null)
+        m.mount(element, null)
       }
     },
   }

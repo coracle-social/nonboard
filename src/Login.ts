@@ -6,6 +6,7 @@ import type {Nip55SignerApp} from './options'
 import {Nip07LoginError, Nip55LoginError} from './error'
 import {View} from './view'
 import IconWidget from './IconWidget.svg'
+import IconArrowLeft from './IconArrowLeft.svg'
 import IconCPU from './IconCPU.svg'
 import IconCompass from './IconCompass.svg'
 import {Card} from './Card'
@@ -123,15 +124,13 @@ export const createLogin = (app: Application) => (): m.Component => {
            m(Icon, {url: IconCompass}),
           `Browse Signer Apps`,
         ]),
-        m(Small, [
-          'Need an account? ',
-          m(Button, {
-            class: "nb-button-link nb-button-inline",
-            onclick: signup,
-            disabled: Boolean(loading),
-          }, [
-            `Register instead`,
-          ]),
+        m(Button, {
+          class: 'nb-button-link',
+          onclick: () => app.actions.back(),
+          disabled: Boolean(loading),
+        }, [
+           m(Icon, {url: IconArrowLeft}),
+          'Go back',
         ]),
       ])
     },

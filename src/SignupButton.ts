@@ -1,5 +1,6 @@
 import m from 'mithril'
 import type {Application} from './application'
+import {View} from './view'
 import {ButtonCard} from './ButtonCard'
 
 export type SignupButtonAttrs = m.Attributes & {
@@ -8,8 +9,8 @@ export type SignupButtonAttrs = m.Attributes & {
   subtitle: string
 }
 
-export const createSignupButton = ({options}: Application): m.Component<Partial<SignupButtonAttrs>> => ({
+export const createSignupButton = ({actions, options}: Application): m.Component<Partial<SignupButtonAttrs>> => ({
   view(vnode) {
-    return m(ButtonCard, {...vnode.attrs, ...options.signupButtonAttrs})
+    return m(ButtonCard, {...vnode.attrs, ...options.signupButtonAttrs, onclick: () => actions.goto(View.Signup)})
   }
 })

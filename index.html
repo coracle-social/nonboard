@@ -99,8 +99,6 @@
     <script type="module">
       import nb, {View} from './src/index'
 
-      let destroy
-
       const app = nb({
         appUrl: window.origin,
         appName: "Nonboard test",
@@ -108,7 +106,8 @@
         onLogin: payload => {
           console.log("logged in:", payload)
           alert(`Logged in with ${Object.keys(payload)}`)
-          destroy()
+          app.unmount()
+          app.reset()
 
           const reset = document.createElement('button')
 
@@ -131,7 +130,7 @@
       })
 
       const init = () => {
-        destroy = app.render(target)
+        app.mount(target)
       }
 
       init()

@@ -3,7 +3,7 @@ export * from './view'
 import m from 'mithril'
 import type {PartialApplicationOptions} from './options'
 import {createOptions} from './options'
-import {createState} from './state'
+import {createState, initialState} from './state'
 import {createActions} from './actions'
 import {createComponents} from './components'
 import {createApplication} from './application'
@@ -20,22 +20,50 @@ export default (opts: PartialApplicationOptions) => {
     components,
   })
 
-  return {
-    ...application,
-    render: (element: Element) => {
-      for (const child of element.childNodes) {
-        element.removeChild(child)
-      }
+  let destroyed: false
+  let mountPoint: Element
+  let unsubscribe: () => void
 
-      m.mount(element, components.createLayout(application))
+  const mount = (element: Element) => {
+    if (destroyed) {
+      throw new Error("Application has been destroyed")
+    }
 
-      const unsubscribe = state.subscribe(s => m.redraw())
+    if (mountPoint) {
+      throw new Error("Application is already mounted, call `unmount()` first")
+    }
 
-      return () => {
-        unsubscribe()
-        actions.destroy()
-        m.mount(element, null)
-      }
-    },
+    mountPoint = element
+
+    for (const child of mountPoint.childNodes) {
+      mountPoint.removeChild(child)
+    }
+
+    m.mount(mountPoint, components.createLayout(application))
+
+    unsubscribe = state.subscribe(s => m.redraw())
+
   }
+
+  const unmount = () => {
+    if (!mountPoint) {
+      throw new Error("Application is not mounted")
+    }
+
+    m.mount(mountPoint, null)
+    mountPoint = undefined
+  }
+
+  const reset = () => {
+    state.set(initialState)
+  }
+
+  const destroy = () => {
+    unmount()
+    unsubscribe()
+    actions.destroy()
+    destroyed = true
+  }
+
+  return {...application, mount, unmount, reset, destroy}
 }

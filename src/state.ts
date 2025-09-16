@@ -9,8 +9,8 @@ export type ApplicationStateValues = {
 
 export type ApplicationState = WritableWithGetter<ApplicationStateValues>
 
-export const defaultState = {
+export const initialState = {
   view: View.Landing
 }
 
-export const createState = (): ApplicationState => withGetter(writable(defaultState))
+export const createState = (): ApplicationState => withGetter(writable(initialState))

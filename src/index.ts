@@ -20,9 +20,9 @@ export default (opts: PartialApplicationOptions) => {
     components,
   })
 
-  let destroyed: false
-  let mountPoint: Element
-  let unsubscribe: () => void
+  let destroyed =  false
+  let mountPoint: Element | undefined
+  let unsubscribe: (() => void) | undefined
 
   const mount = (element: Element) => {
     if (destroyed) {
@@ -59,10 +59,12 @@ export default (opts: PartialApplicationOptions) => {
   }
 
   const destroy = () => {
-    unmount()
-    unsubscribe()
-    actions.destroy()
-    destroyed = true
+    if (!destroyed) {
+      unmount()
+      unsubscribe?.()
+      actions.destroy()
+      destroyed = true
+    }
   }
 
   return {...application, mount, unmount, reset, destroy}

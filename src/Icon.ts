@@ -5,6 +5,7 @@ import IconLoading from './IconLoading.svg'
 export type IconAttrs = {
   url?: string
   loading?: boolean
+  onclick?: (event: Event) => void
 }
 
 export const Icon: m.Component<IconAttrs> = {

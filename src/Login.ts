@@ -10,7 +10,6 @@ import IconArrowLeft from './IconArrowLeft.svg'
 import IconCPU from './IconCPU.svg'
 import IconCompass from './IconCompass.svg'
 import {Card} from './Card'
-import {Small} from './Small'
 import {CardHeader} from './CardHeader'
 import {Title} from './Title'
 import {Subtitle} from './Subtitle'
@@ -26,10 +25,6 @@ export const createLogin = (app: Application) => (): m.Component => {
   const setLoading = (value: string) => {
     loading = value
     m.redraw()
-  }
-
-  const signup = () => {
-    app.actions.goto(View.Signup)
   }
 
   const loginWithBunker = () => {

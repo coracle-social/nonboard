@@ -3,6 +3,8 @@ import IconLogin from './IconLogin.svg'
 import IconRocket from './IconRocket.svg'
 import type {LoginButtonAttrs} from './LoginButton'
 import type {SignupButtonAttrs} from './SignupButton'
+import type {Translations} from './translations'
+import {defaultTranslations} from './translations'
 import {ApplicationError} from './error'
 
 export type Nip55SignerApp = {
@@ -45,11 +47,10 @@ export type RequiredApplicationOptions = {
 
 export type OptionalApplicationOptions = {
   history: History
+  translations: Translations
   signerRelays: string[]
   signerPermissions: string
   nip55SignerApps: Nip55SignerApp[]
-  loginButtonAttrs: LoginButtonAttrs
-  signupButtonAttrs: SignupButtonAttrs
 }
 
 export type ApplicationOptions = RequiredApplicationOptions & OptionalApplicationOptions
@@ -58,6 +59,7 @@ export type PartialApplicationOptions = RequiredApplicationOptions & Partial<Opt
 
 export const defaultApplicationOptions = {
   history: window.history,
+  translations: defaultTranslations,
   signerRelays: [
     'wss://relay.nos.social/',
     'wss://relay.nsec.app/',
@@ -65,16 +67,6 @@ export const defaultApplicationOptions = {
   ],
   signerPermissions: "",
   nip55SignerApps: [],
-  loginButtonAttrs: {
-    icon: IconLogin,
-    title: "Log in",
-    subtitle: "If you've used Nostr before, you know the drill.",
-  },
-  signupButtonAttrs: {
-    icon: IconRocket,
-    title: "Create an account",
-    subtitle: "If you've used Nostr before, you know the drill.",
-  },
 }
 
 export const createOptions = (options: PartialApplicationOptions) =>

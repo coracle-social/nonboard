@@ -1,7 +1,7 @@
 import m from 'mithril'
 import QR from "qrcode"
 
-export type QRCodeAttrs = {
+export type QRCodeAttrs = m.Attributes & {
   data: string
 }
 

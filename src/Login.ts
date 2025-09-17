@@ -1,6 +1,6 @@
 import m from 'mithril'
 import cx from 'classnames'
-import {getNip07, Nip55Signer} from "@welshman/signer"
+import {getNip07, Nip07Signer, Nip55Signer} from "@welshman/signer"
 import type {Application} from './application'
 import type {Nip55SignerApp} from './options'
 import {Nip07LoginError, Nip55LoginError} from './error'
@@ -31,11 +31,13 @@ export const createLogin = (app: Application) => (): m.Component => {
     setLoading("nip07")
 
     try {
-      const pubkey = await nip07?.getPublicKey()
+      const signer = new Nip07Signer()
+      const pubkey = await signer.getPubkey()
 
       if (pubkey) {
         app.options.onLogin({
           nip07: {pubkey},
+          events: await app.actions.fetchUserData(signer),
         })
       } else {
         app.options.onError(
@@ -47,15 +49,17 @@ export const createLogin = (app: Application) => (): m.Component => {
     }
   }
 
-  const loginWithNip55 = async (signer: Nip55SignerApp) => {
+  const loginWithNip55 = async (signerApp: Nip55SignerApp) => {
     setLoading("nip55")
 
     try {
-      const pubkey = await new Nip55Signer(signer.packageName).getPubkey()
+      const signer = new Nip55Signer(signerApp.packageName)
+      const pubkey = await signer.getPubkey()
 
       if (pubkey) {
         app.options.onLogin({
-          nip55: {pubkey, signer},
+          nip55: {pubkey, signerApp},
+          events: await app.actions.fetchUserData(signer),
         })
       } else {
         app.options.onError(
@@ -82,14 +86,14 @@ export const createLogin = (app: Application) => (): m.Component => {
           m(Icon, {url: app.tr('login.extension.icon'), loading: loading === 'nip07'}),
           app.tr('login.extension.button'),
         ]),
-        ...app.options.nip55SignerApps.map(signer =>
+        ...app.options.nip55SignerApps.map(signerApp =>
           m(Button, {
             class: cx({'nb-button-primary': !nip07}),
             disabled: Boolean(loading),
-            onclick: () => loginWithNip55(signer),
+            onclick: () => loginWithNip55(signerApp),
           }, [
             m(Icon, {url: app.tr('login.extension.icon'), loading: loading === 'nip55'}),
-            `${app.tr('login.signer.prefix')} ${signer.name}`,
+            `${app.tr('login.signer.prefix')} ${signerApp.name}`,
           ])
         ),
         m(Button, {

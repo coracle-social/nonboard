@@ -9,20 +9,24 @@ export type Nip55SignerApp = {
   packageName: string
 }
 
-export type Nip01Payload = {
+export type BaseLoginPayload = {
+  events: SignedEvent[]
+}
+
+export type Nip01LoginPayload = BaseLoginPayload & {
   nip01: {
     pubkey: string
     secret: string
   }
 }
 
-export type Nip07Payload = {
+export type Nip07LoginPayload = BaseLoginPayload & {
   nip07: {
     pubkey: string
   }
 }
 
-export type Nip46Payload = {
+export type Nip46LoginPayload = BaseLoginPayload & {
   nip46: {
     pubkey: string
     clientSecret: string,
@@ -31,24 +35,20 @@ export type Nip46Payload = {
   }
 }
 
-export type Nip55Payload = {
+export type Nip55LoginPayload = BaseLoginPayload & {
   nip55: {
     pubkey: string
-    signer: Nip55SignerApp
+    signerApp: Nip55SignerApp
   }
 }
 
-export type SignupPayload = Nip01Payload & {
-  events: SignedEvent[]
-}
-
-export type LoginPayload = Nip07Payload | Nip46Payload | Nip55Payload
+export type LoginPayload = Nip01LoginPayload | Nip07LoginPayload | Nip46LoginPayload | Nip55LoginPayload
 
 export type RequiredApplicationOptions = {
   appUrl: string
   appName: string
   appImage: string
-  onSignup: (payload: SignupPayload) => void
+  onSignup: (payload: LoginPayload) => void
   onLogin: (payload: LoginPayload) => void
   onError: (error: ApplicationError) => void
   onInfo: (message: string) => void

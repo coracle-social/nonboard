@@ -1,4 +1,8 @@
-import {assoc} from '@welshman/lib'
+import {spec, assoc} from '@welshman/lib'
+import {request} from '@welshman/net'
+import {PROFILE, RELAYS, getRelayTagValues, deduplicateEvents} from '@welshman/util'
+import type {SignedEvent, TrustedEvent} from '@welshman/util'
+import type {ISigner} from '@welshman/signer'
 import type {ApplicationOptions} from './options'
 import type {ApplicationState, ProfileValues} from './state'
 import type {View} from './view'
@@ -50,6 +54,7 @@ export type ApplicationActions = {
   goto: (view: View) => void
   destroy: () => void
   updateProfile: (profile: Partial<ProfileValues>) => void
+  fetchUserData: (signer: ISigner) => Promise<SignedEvent[]>
 }
 
 export const createActions = (options: ApplicationOptions, state: ApplicationState): ApplicationActions => {
@@ -59,7 +64,32 @@ export const createActions = (options: ApplicationOptions, state: ApplicationSta
     back: () => options.history.back(),
     goto: (view: View) => options.history.pushState({view}, ""),
     destroy: () =>  destroyHistory(),
-    updateProfile: (profile: Partial<ProfileValues>) =>
+    updateProfile: (profile: Partial<ProfileValues>) => {
       state.update($s => ({...$s, profile: {...$s.profile, ...profile}}))
+    },
+    fetchUserData: async (signer: ISigner) => {
+      const pubkey = await signer.getPubkey()
+      const events = await request({
+        autoClose: true,
+        signal: AbortSignal.timeout(3000),
+        relays: options.indexerRelays,
+        filters: [{kinds: [RELAYS, PROFILE], authors: [pubkey]}],
+      })
+
+      const relaysEvent = events.find(spec({kind: RELAYS}))
+      const profileEvent = events.find(spec({kind: PROFILE}))
+
+      if (relaysEvent && !profileEvent) {
+        await request({
+          autoClose: true,
+          signal: AbortSignal.timeout(3000),
+          relays: getRelayTagValues(relaysEvent.tags),
+          filters: [{kinds: [RELAYS, PROFILE], authors: [pubkey]}],
+          onEvent: (event: TrustedEvent) => events.push(event),
+        })
+      }
+
+      return deduplicateEvents(events) as SignedEvent[]
+    },
   }
 }

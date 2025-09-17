@@ -2,7 +2,7 @@ import m from 'mithril'
 import cx from 'classnames'
 import {debounce} from "throttle-debounce"
 import type {Nip46ResponseWithResult} from "@welshman/signer"
-import {Nip46Broker, makeSecret} from "@welshman/signer"
+import {Nip46Broker, Nip46Signer, makeSecret} from "@welshman/signer"
 import type {Application} from './application'
 import {preventDefault, copyToClipboard} from './util'
 import {Nip46LoginError} from './error'
@@ -77,7 +77,8 @@ export const createLoginBunker = (app: Application) => (): m.Component => {
 
       const broker = new Nip46Broker({relays, clientSecret, signerPubkey})
       const result = await broker.connect(connectSecret, app.options.signerPermissions)
-      const pubkey = await broker.getPublicKey()
+      const signer = new Nip46Signer(broker)
+      const pubkey = await signer.getPubkey()
 
       // TODO: remove ack result
       if (pubkey && ["ack", connectSecret].includes(result)) {
@@ -90,6 +91,7 @@ export const createLoginBunker = (app: Application) => (): m.Component => {
             signerPubkey,
             clientSecret,
           },
+          events: await app.actions.fetchUserData(signer)
         })
       } else {
         app.options.onError(
@@ -110,7 +112,8 @@ export const createLoginBunker = (app: Application) => (): m.Component => {
     setLoading(true)
 
     try {
-      const pubkey = await broker.getPublicKey()
+      const signer = new Nip46Signer(broker)
+      const pubkey = await signer.getPubkey()
 
       if (pubkey) {
         app.options.onLogin({
@@ -120,6 +123,7 @@ export const createLoginBunker = (app: Application) => (): m.Component => {
             signerPubkey: response.event.pubkey,
             relays: app.options.signerRelays,
           },
+          events: await app.actions.fetchUserData(signer),
         })
       } else {
         app.options.onError(

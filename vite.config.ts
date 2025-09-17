@@ -11,6 +11,11 @@ export default defineConfig(({ mode }) => {
           fileName: 'index',
           formats: ['es']
         },
+        rollupOptions: {
+          output: {
+            assetFileNames: 'index.css'
+          }
+        }
       }
     }
   }

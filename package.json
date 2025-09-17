@@ -1,6 +1,6 @@
 {
   "name": "nonboard",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "type": "module",
   "main": "dist/index.js",
   "module": "dist/index.js",
@@ -19,10 +19,12 @@
     "dev": "vite",
     "build": "tsc && vite build --mode=lib",
     "build:lib": "tsc && vite build --mode=lib",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "prepare": "husky"
   },
   "devDependencies": {
     "@types/mithril": "^2.2.7",
+    "husky": "^9.1.7",
     "typescript": "~5.8.3",
     "vite": "^7.1.2"
   },

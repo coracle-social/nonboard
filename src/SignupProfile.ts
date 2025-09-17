@@ -1,5 +1,4 @@
 import m from 'mithril'
-import {assoc} from '@welshman/lib'
 import type {Application} from './application'
 import {View} from './view'
 import {preventDefault} from './util'
@@ -19,15 +18,15 @@ import {Small} from './Small'
 import {Column} from './Column'
 import {AvatarInput} from './AvatarInput'
 
-export const createSignupProfile = (app: Application): m.Component => ({
+export const createSignupProfile = (app: Application) => (): m.Component => ({
   view(vnode) {
-    const {name, about, picture} = app.state.get().signup
+    const {name, about} = app.state.get().profile
 
-    const setName = (name: string) => app.state.update(assoc('signup', {name, about, picture}))
+    const setName = (name: string) => app.actions.updateProfile({name})
 
-    const setAbout = (about: string) => app.state.update(assoc('signup', {name, about, picture}))
+    const setAbout = (about: string) => app.actions.updateProfile({about})
 
-    const setPicture = (picture: File | undefined) => app.state.update(assoc('signup', {name, about, picture}))
+    const setPicture = (picture: File | undefined) => app.actions.updateProfile({picture})
 
     const submit = () => app.actions.goto(View.SignupKey)
 
@@ -37,7 +36,7 @@ export const createSignupProfile = (app: Application): m.Component => ({
           m(Title, app.tr('signup.profile.title')),
           m(Subtitle, app.tr('signup.profile.subtitle')),
         ]),
-        m(Column, {class: 'nb-items-center'}, [
+        m(Column, {class: 'nb-items-center nb-gap-1'}, [
           m(AvatarInput, {
             onChange: setPicture,
           }),

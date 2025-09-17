@@ -17,10 +17,16 @@ importers:
       '@welshman/lib':
         specifier: ^0.4.6
         version: 0.4.6
+      '@welshman/net':
+        specifier: ^0.4.6
+        version: 0.4.6(typescript@5.8.3)(ws@8.18.3)
       '@welshman/signer':
         specifier: ^0.4.6
         version: 0.4.6(nostr-signer-capacitor-plugin@0.0.4(@capacitor/core@7.4.3))(typescript@5.8.3)(ws@8.18.3)
       '@welshman/store':
+        specifier: ^0.4.6
+        version: 0.4.6(typescript@5.8.3)
+      '@welshman/util':
         specifier: ^0.4.6
         version: 0.4.6(typescript@5.8.3)
       classnames:

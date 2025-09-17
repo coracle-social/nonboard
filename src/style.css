@@ -169,6 +169,14 @@
   font-size: 0.9rem;
 }
 
+/* Alert */
+
+.nb-alert {
+  border-radius: var(--nb-card-radius);
+  background-color: var(--nb-base-200);
+  padding: 1rem;
+}
+
 /* Link */
 
 .nb-link {

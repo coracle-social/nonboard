@@ -9,7 +9,6 @@
     <style>
       :root {
         font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-        line-height: 1.5;
         font-weight: 400;
 
         color: #213547;
@@ -90,6 +89,21 @@
     <script type="module">
       import nb, {View} from './src/index'
 
+      const reset = () => {
+        app.unmount()
+        app.reset()
+
+        const reset = document.createElement('button')
+
+        reset.textContent = "Flow complete! Start over?"
+        reset.classList.add("nb-button")
+        reset.classList.add("nb-button-secondary")
+        reset.style = "margin: 4rem auto;"
+        reset.addEventListener('click', init)
+
+        target.appendChild(reset)
+      }
+
       const app = nb({
         appUrl: window.origin,
         appName: "Nonboard test",
@@ -97,21 +111,15 @@
         translations: {
           "landing.signup.title": "Sign up",
         },
+        onSignup: payload => {
+          console.log("signed up:", payload)
+          alert(`Signed up with nip01`)
+          reset()
+        },
         onLogin: payload => {
           console.log("logged in:", payload)
           alert(`Logged in with ${Object.keys(payload)}`)
-          app.unmount()
-          app.reset()
-
-          const reset = document.createElement('button')
-
-          reset.textContent = "Flow complete! Start over?"
-          reset.classList.add("nb-button")
-          reset.classList.add("nb-button-secondary")
-          reset.style = "margin: 4rem auto;"
-          reset.addEventListener('click', init)
-
-          target.appendChild(reset)
+          reset()
         },
         onError: error => {
           console.log("recevied error:", error)

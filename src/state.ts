@@ -3,7 +3,7 @@ import type {WritableWithGetter} from '@welshman/store'
 import {writable} from 'svelte/store'
 import {View} from './view'
 
-export type SignupValues = {
+export type ProfileValues = {
   name: string
   about: string
   picture?: File
@@ -11,14 +11,14 @@ export type SignupValues = {
 
 export type ApplicationStateValues = {
   view: View
-  signup: SignupValues
+  profile: ProfileValues
 }
 
 export type ApplicationState = WritableWithGetter<ApplicationStateValues>
 
 export const initialState = {
   view: View.Landing,
-  signup: {
+  profile: {
     name: "",
     about: "",
   },

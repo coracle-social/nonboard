@@ -7,7 +7,7 @@ import {Subtitle} from './Subtitle'
 import {Card} from './Card'
 import {View} from './view'
 
-export const createLanding = (app: Application): m.Component => ({
+export const createLanding = (app: Application) => (): m.Component => ({
   view(vnode) {
     return m(Card, [
       m(CardHeader, [
@@ -29,7 +29,7 @@ export const createLanding = (app: Application): m.Component => ({
         icon: app.tr('landing.signup.icon'),
         title: app.tr('landing.signup.title'),
         subtitle: app.tr('landing.signup.subtitle'),
-        onclick: () => app.actions.goto(View.Signup),
+        onclick: () => app.actions.goto(View.SignupProfile),
       }),
     ])
   }

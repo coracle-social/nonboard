@@ -3,13 +3,12 @@ import cx from 'classnames'
 import {nsecEncode} from "nostr-tools/nip19"
 import {encrypt} from "nostr-tools/nip49"
 import {hexToBytes} from "@welshman/lib"
-import {makeSecret} from "@welshman/signer"
 import {preventDefault, downloadText} from './util'
 import {SignupKeyError} from './error'
 import {View} from './view'
 import type {Application} from './application'
 import {Card} from './Card'
-import {Text} from './Text'
+import {Alert} from './Alert'
 import {Field} from './Field'
 import {Title} from './Title'
 import {Subtitle} from './Subtitle'
@@ -31,7 +30,7 @@ On Nostr, you control your own identity and social data, through the magic of cr
 idea is that you have a public key, which acts as your user ID, and a private key which allows you to
 prove your identity.
 
-It's very important to keep your private key safe because it grants permanent and complete access to your
+It's very important to keep your private key secret because it grants permanent and complete access to your
 account.
 `
 
@@ -42,12 +41,14 @@ const cleanupCopy = (copy: string) =>
     .replace(/NEWLINE/g, "\n\n")
     .trim()
 
-export const createSignupKey = (app: Application): m.Component => {
+export type SignupKeyAttrs = {
+  secret: string
+}
+
+export const createSignupKey = (app: Application) => (): m.Component<SignupKeyAttrs> => {
   let password = ""
   let usePassword = false
   let didDownload = false
-
-  const secret = makeSecret()
 
   const setPassword = (newPassword: string) => {
     password = newPassword
@@ -64,7 +65,7 @@ export const createSignupKey = (app: Application): m.Component => {
     m.redraw()
   }
 
-  const downloadKey = () => {
+  const downloadKey = (secret: string) => {
     if (usePassword) {
       if (password.length < 12) {
         return app.options.onError(
@@ -123,14 +124,13 @@ export const createSignupKey = (app: Application): m.Component => {
 
   return {
     view(vnode) {
-      return m('form', {onsubmi: preventDefault(next)}, [
+      return m('form', {onsubmit: preventDefault(next)}, [
         m(Card, [
           m(CardHeader, [
             m(Title, app.tr('signup.key.title')),
-            m(Subtitle, app.tr('signup.key.title')),
+            m(Subtitle, app.tr('signup.key.subtitle')),
           ]),
-          m(Text, app.tr('signup.key.info.1')),
-          m(Text, app.tr('signup.key.info.2')),
+          m(Alert, app.tr('signup.key.info')),
           usePassword && m(Field, [
             m(Label, app.tr('signup.key.password.label')),
             m(InputWrapper, {
@@ -147,7 +147,7 @@ export const createSignupKey = (app: Application): m.Component => {
           m(Column, [
             m(Button, {
               class: cx({'nb-button-primary': !didDownload}),
-              onclick: downloadKey,
+              onclick: () => downloadKey(vnode.attrs.secret),
             }, [
               app.tr('signup.key.download.text'),
               m(Icon, {url: app.tr('signup.key.download.icon')}),

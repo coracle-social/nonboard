@@ -1,6 +1,6 @@
 import {assoc} from '@welshman/lib'
 import type {ApplicationOptions} from './options'
-import type {ApplicationState} from './state'
+import type {ApplicationState, ProfileValues} from './state'
 import type {View} from './view'
 
 const syncHistory = (options: ApplicationOptions, state: ApplicationState) => {
@@ -49,6 +49,7 @@ export type ApplicationActions = {
   back: () => void
   goto: (view: View) => void
   destroy: () => void
+  updateProfile: (profile: Partial<ProfileValues>) => void
 }
 
 export const createActions = (options: ApplicationOptions, state: ApplicationState): ApplicationActions => {
@@ -57,8 +58,8 @@ export const createActions = (options: ApplicationOptions, state: ApplicationSta
   return {
     back: () => options.history.back(),
     goto: (view: View) => options.history.pushState({view}, ""),
-    destroy: () => {
-      destroyHistory()
-    },
+    destroy: () =>  destroyHistory(),
+    updateProfile: (profile: Partial<ProfileValues>) =>
+      state.update($s => ({...$s, profile: {...$s.profile, ...profile}}))
   }
 }

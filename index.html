@@ -118,7 +118,7 @@
         },
         onLogin: payload => {
           console.log("logged in:", payload)
-          alert(`Logged in with ${Object.keys(payload)}`)
+          alert(`Logged in with ${payload.method}`)
           reset()
         },
         onError: error => {

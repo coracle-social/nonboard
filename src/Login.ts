@@ -36,7 +36,8 @@ export const createLogin = (app: Application) => (): m.Component => {
 
       if (pubkey) {
         app.options.onLogin({
-          nip07: {pubkey},
+          pubkey,
+          method: "nip07",
           events: await app.actions.fetchUserData(signer),
         })
       } else {
@@ -58,8 +59,10 @@ export const createLogin = (app: Application) => (): m.Component => {
 
       if (pubkey) {
         app.options.onLogin({
-          nip55: {pubkey, signerApp},
+          pubkey,
+          method: "nip55",
           events: await app.actions.fetchUserData(signer),
+          nip55: {signerApp},
         })
       } else {
         app.options.onError(

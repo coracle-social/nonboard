@@ -76,9 +76,10 @@ export const createSignupComplete = (app: Application) => (): m.Component<Signup
       )
 
       app.options.onSignup({
+        pubkey,
         events,
+        method: "nip01",
         nip01: {
-          pubkey,
           secret,
         },
       })

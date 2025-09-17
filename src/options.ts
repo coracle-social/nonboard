@@ -10,25 +10,24 @@ export type Nip55SignerApp = {
 }
 
 export type BaseLoginPayload = {
+  pubkey: string
   events: SignedEvent[]
 }
 
 export type Nip01LoginPayload = BaseLoginPayload & {
+  method: "nip01"
   nip01: {
-    pubkey: string
     secret: string
   }
 }
 
 export type Nip07LoginPayload = BaseLoginPayload & {
-  nip07: {
-    pubkey: string
-  }
+  method: "nip07"
 }
 
 export type Nip46LoginPayload = BaseLoginPayload & {
+  method: "nip46"
   nip46: {
-    pubkey: string
     clientSecret: string,
     signerPubkey: string,
     relays: string[],
@@ -36,8 +35,8 @@ export type Nip46LoginPayload = BaseLoginPayload & {
 }
 
 export type Nip55LoginPayload = BaseLoginPayload & {
+  method: "nip55"
   nip55: {
-    pubkey: string
     signerApp: Nip55SignerApp
   }
 }

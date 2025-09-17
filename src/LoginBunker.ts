@@ -85,13 +85,14 @@ export const createLoginBunker = (app: Application) => (): m.Component => {
         broker.cleanup()
 
         app.options.onLogin({
+          pubkey,
+          method: "nip46",
+          events: await app.actions.fetchUserData(signer),
           nip46: {
-            pubkey,
             relays,
             signerPubkey,
             clientSecret,
           },
-          events: await app.actions.fetchUserData(signer)
         })
       } else {
         app.options.onError(
@@ -117,13 +118,14 @@ export const createLoginBunker = (app: Application) => (): m.Component => {
 
       if (pubkey) {
         app.options.onLogin({
+          pubkey,
+          method: "nip46",
+          events: await app.actions.fetchUserData(signer),
           nip46: {
-            pubkey,
             clientSecret,
             signerPubkey: response.event.pubkey,
             relays: app.options.signerRelays,
           },
-          events: await app.actions.fetchUserData(signer),
         })
       } else {
         app.options.onError(

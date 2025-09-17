@@ -7,7 +7,7 @@ import IconKey from './IconKey.svg'
 import IconLoading from './IconLoading.svg'
 import IconLogin from './IconLogin.svg'
 import IconQRCode from './IconQRCode.svg'
-import IconRocket from './IconRocket.svg'
+import IconStars from './IconStars.svg'
 import IconUser from './IconUser.svg'
 import IconWidget from './IconWidget.svg'
 
@@ -23,7 +23,7 @@ export const defaultTranslations: Translations = {
   "landing.login.icon": IconLogin,
   "landing.login.title": "Log in",
   "landing.login.subtitle": "If you've used Nostr before, you know the drill.",
-  "landing.signup.icon": IconRocket,
+  "landing.signup.icon": IconStars,
   "landing.signup.title": "Create an account",
   "landing.signup.subtitle": "Just a few questions and you'll be on your way.",
   "login.title": "Log in with Nostr",

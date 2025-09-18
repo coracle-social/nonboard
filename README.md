@@ -39,7 +39,7 @@ app.mount(document.getElementById('#app'))
 pnpm install
 
 # Build the library
-pnpm run build:lib
+pnpm run build
 
 # Development mode
 pnpm run dev

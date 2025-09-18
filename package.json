@@ -18,7 +18,6 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build --mode=lib",
-    "build:lib": "tsc && vite build --mode=lib",
     "preview": "vite preview",
     "prepare": "husky"
   },

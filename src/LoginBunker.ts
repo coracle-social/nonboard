@@ -67,9 +67,15 @@ export const createLoginBunker = (app: Application) => (): m.Component => {
     try {
       const {signerPubkey, connectSecret, relays} = Nip46Broker.parseBunkerUrl(bunkerUrl)
 
-      if (!signerPubkey || relays.length === 0) {
+      if (!signerPubkey) {
         return app.options.onError(
-          new Nip46LoginError(app.tr('error.bunker.invalid'))
+          new Nip46LoginError(app.tr('error.bunker.noPubkey'))
+        )
+      }
+
+      if (relays.length === 0) {
+        return app.options.onError(
+          new Nip46LoginError(app.tr('error.bunker.noRelays'))
         )
       }
 

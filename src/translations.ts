@@ -83,7 +83,8 @@ export const defaultTranslations: Translations = {
   "card.arrow.icon": IconArrowRight,
   "loading.icon": IconLoading,
   "error.generic": "Something went wrong! Please try again.",
-  "error.bunker.invalid": "Sorry, it looks like that's an invalid bunker link.",
+  "error.bunker.noPubkey": "Sorry, it looks like that's an invalid bunker link.",
+  "error.bunker.noRelays": "That bunker link does not include any relays.",
   "error.bunker.signer.prefix": "Received error from signer:",
   "info.copied": "Copied to clipboard!",
 }

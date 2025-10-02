@@ -15,6 +15,10 @@
   --nb-danger: #dd0000;
 }
 
+.nb-root * {
+  box-sizing: border-box;
+}
+
 /* Icon */
 
 .nb-icon {
@@ -218,7 +222,7 @@
 
 .nb-input-wrapper__before {
   width: 1rem;
-  margin-right: -2rem;
+  margin-right: -1rem;
   padding-left: 1rem;
 }
 

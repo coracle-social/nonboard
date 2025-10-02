@@ -14,16 +14,20 @@ export const createLayout = (app: Application) => {
   return (): m.Component => {
     const secret = makeSecret()
 
+    const getRoute = () => {
+      switch (app.state.get().view) {
+        case View.Landing: return m(Landing)
+        case View.Login: return m(Login)
+        case View.LoginBunker: return m(LoginBunker)
+        case View.SignupProfile: return m(SignupProfile)
+        case View.SignupKey: return m(SignupKey, {secret})
+        case View.SignupComplete: return m(SignupComplete, {secret})
+      }
+    }
+
     return {
       view(vnode) {
-        switch (app.state.get().view) {
-          case View.Landing: return m(Landing)
-          case View.Login: return m(Login)
-          case View.LoginBunker: return m(LoginBunker)
-          case View.SignupProfile: return m(SignupProfile)
-          case View.SignupKey: return m(SignupKey, {secret})
-          case View.SignupComplete: return m(SignupComplete, {secret})
-        }
+        return m("div.nb-root", getRoute())
       }
     }
   }

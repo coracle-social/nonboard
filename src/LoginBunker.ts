@@ -90,7 +90,7 @@ export const createLoginBunker = (app: Application) => (): m.Component => {
       if (pubkey && ["ack", connectSecret].includes(result)) {
         broker.cleanup()
 
-        app.options.onLogin({
+        await app.options.onLogin({
           pubkey,
           method: "nip46",
           events: await app.actions.fetchUserData(signer),
@@ -123,7 +123,7 @@ export const createLoginBunker = (app: Application) => (): m.Component => {
       const pubkey = await signer.getPubkey()
 
       if (pubkey) {
-        app.options.onLogin({
+        await app.options.onLogin({
           pubkey,
           method: "nip46",
           events: await app.actions.fetchUserData(signer),
